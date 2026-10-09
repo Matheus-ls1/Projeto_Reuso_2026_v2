@@ -1,0 +1,10 @@
+{
+  "description": "Creates customized plans from uploaded files to streamline project organization and enhance productivity for professionals and teams.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
