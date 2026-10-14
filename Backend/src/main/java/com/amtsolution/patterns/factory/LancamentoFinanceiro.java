@@ -1,2 +1,6 @@
 package com.amtsolution.patterns.factory;
-public interface LancamentoFinanceiro { Object entidade(); }
+
+// Produto abstrato da fábrica; expõe a entidade financeira criada sem fixar seu tipo concreto.
+public interface LancamentoFinanceiro {
+    Object entidade();
+}

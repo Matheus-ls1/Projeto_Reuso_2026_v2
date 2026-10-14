@@ -19,7 +19,8 @@ public class ApiExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     ResponseEntity<Map<String, Object>> validation(MethodArgumentNotValidException ex) {
         Map<String, String> fields = new LinkedHashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(error -> fields.put(error.getField(), error.getDefaultMessage()));
+        ex.getBindingResult().getFieldErrors()
+                .forEach(error -> fields.put(error.getField(), error.getDefaultMessage()));
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("status", HttpStatus.BAD_REQUEST.value());
         body.put("erro", "Dados inválidos.");
@@ -27,9 +28,10 @@ public class ApiExceptionHandler {
         return ResponseEntity.badRequest().body(body);
     }
 
-    @ExceptionHandler({DataIntegrityViolationException.class, ConflictException.class})
+    @ExceptionHandler({ DataIntegrityViolationException.class, ConflictException.class })
     ResponseEntity<Map<String, String>> conflict(Exception ex) {
-        return response(HttpStatus.CONFLICT, ex instanceof ConflictException ? ex.getMessage() : "Operação viola uma restrição de integridade.");
+        return response(HttpStatus.CONFLICT,
+                ex instanceof ConflictException ? ex.getMessage() : "Operação viola uma restrição de integridade.");
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

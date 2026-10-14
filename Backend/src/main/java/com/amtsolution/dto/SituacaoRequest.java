@@ -1,3 +1,7 @@
 package com.amtsolution.dto;
+
 import jakarta.validation.constraints.NotBlank;
-public record SituacaoRequest(@NotBlank String situacao) {}
+
+// DTO reduzido para mudanças pontuais de situação financeira.
+public record SituacaoRequest(@NotBlank String situacao) {
+}

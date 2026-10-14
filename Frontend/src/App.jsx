@@ -17,27 +17,29 @@ import Avisos from "./pages/Avisos";
 import Usuarios from "./pages/Usuarios";
 import PermissoesModulos from "./pages/PermissoesModulos";
 export default function App() {
-    return (<BrowserRouter>
+  return (
+    <BrowserRouter>
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<Login />}/>
+        <Route path="/" element={<Login />} />
         <Route element={<AppShell />}>
-          <Route path="/dashboard" element={<Dashboard />}/>
-          <Route path="/pdv" element={<PDV />}/>
-          <Route path="/caixa" element={<Caixa />}/>
-          <Route path="/produtos" element={<Produtos />}/>
-          <Route path="/estoque" element={<Estoque />}/>
-          <Route path="/fornecedores" element={<Fornecedores />}/>
-          <Route path="/pedidos" element={<PedidosCompra />}/>
-          <Route path="/financeiro" element={<DashboardFinanceiro />}/>
-          <Route path="/contas-pagar" element={<ContasPagar />}/>
-          <Route path="/contas-receber" element={<ContasReceber />}/>
-          <Route path="/relatorios" element={<Relatorios />}/>
-          <Route path="/avisos" element={<Avisos />}/>
-          <Route path="/usuarios" element={<Usuarios />}/>
-          <Route path="/permissoes" element={<PermissoesModulos />}/>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/pdv" element={<PDV />} />
+          <Route path="/caixa" element={<Caixa />} />
+          <Route path="/produtos" element={<Produtos />} />
+          <Route path="/estoque" element={<Estoque />} />
+          <Route path="/fornecedores" element={<Fornecedores />} />
+          <Route path="/pedidos" element={<PedidosCompra />} />
+          <Route path="/financeiro" element={<DashboardFinanceiro />} />
+          <Route path="/contas-pagar" element={<ContasPagar />} />
+          <Route path="/contas-receber" element={<ContasReceber />} />
+          <Route path="/relatorios" element={<Relatorios />} />
+          <Route path="/avisos" element={<Avisos />} />
+          <Route path="/usuarios" element={<Usuarios />} />
+          <Route path="/permissoes" element={<PermissoesModulos />} />
         </Route>
-        <Route path="*" element={<Navigate to="/" replace/>}/>
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </BrowserRouter>);
+    </BrowserRouter>
+  );
 }
