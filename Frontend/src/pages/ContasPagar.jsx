@@ -49,6 +49,7 @@ export default function ContasPagar() {
     dias: "0",
     resultado: null,
   });
+  // [FLUXO:PAGAR_CRIAR] useEffect e pós-operação atualizam o estado contas a partir da API.
   const carregar = async () => {
     try {
       // A listagem vem da API para substituir os dados locais após cada alteração.
@@ -154,6 +155,7 @@ export default function ContasPagar() {
       ),
     },
   ];
+  // [FLUXO:PAGAR_CRIAR] Botão Salvar valida e envia criar/atualizar ao contasPagarService.
   const salvar = async () => {
     if (!form.descricao || !form.valor || !form.vencimento)
       return toast("Preencha descrição, valor e vencimento.", "error");
@@ -196,6 +198,7 @@ export default function ContasPagar() {
             <Button
               variant="secondary"
               onClick={async () => {
+                // [FLUXO:PAGAR_VENCIMENTOS] Este botão chama verificarVencimentos e recebe a quantidade verificada.
                 try {
                   const resultado = await contasPagarService.verificarVencimentos();
                   toast(
@@ -443,6 +446,7 @@ export default function ContasPagar() {
             <Button
               variant="primary"
               onClick={async () => {
+                // [FLUXO:PAGAR_CRIAR] Confirmação registra a situação PAGO via PATCH e atualiza a tabela.
                 try {
                   await contasPagarService.situacao(
                     contaSelecionada.id,
@@ -519,6 +523,7 @@ export default function ContasPagar() {
               variant="primary"
               disabled={simulando}
               onClick={async () => {
+                // [FLUXO:PAGAR_ENCARGOS] Botão Simular envia estratégia/parâmetros e guarda ResultadoCalculo no estado simulacao.
                 try {
                   setSimulando(true);
                   const resultado = await contasPagarService.simularEncargos(

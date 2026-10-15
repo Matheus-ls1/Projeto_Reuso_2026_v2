@@ -37,12 +37,16 @@ public class ContaReceberService {
     }
 
     public ContaReceber criar(ContaReceberRequest r) {
+        // [FLUXO:RECEBER_CRIAR] Controller validado chama este método; a fábrica fornece a entidade e o repository persiste.
+        // [PADRAO:FACTORY_FINANCEIRO] CriadorContaReceber implementa fabricar() definido no criador abstrato financeiro.
         // O criador concreto produz o lançamento correto antes de receber os dados da requisição.
         ContaReceber c = (ContaReceber) criador.criar().entidade();
         return repository.save(preencher(c, r));
     }
 
     public ResultadoCalculo simularDesconto(Long id, String estrategia, java.math.BigDecimal parametro, int dias) {
+        // [PADRAO:STRATEGY_DESCONTOS] ContextoDesconto escolhe a estratégia concreta e retorna o cálculo polimórfico.
+        // [FLUXO:RECEBER_DESCONTOS] O resultado volta ao controller/frontend sem chamar save no repository.
         ContaReceber c = buscar(id);
         // A simulação é somente cálculo: nenhuma alteração é gravada na entidade.
         return descontos.simular(estrategia, c.getValorOriginal(), parametro, dias);

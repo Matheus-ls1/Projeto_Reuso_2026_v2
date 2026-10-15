@@ -36,10 +36,12 @@ const payload = (c) => ({
 });
 export const contasPagarService = {
   ...criarOperacoesFinanceirasComuns("/contas-pagar", map, payload),
+  // [FLUXO:PAGAR_ENCARGOS] A simulação da tela chama GET no endpoint que delega ao ContextoEncargo.
   simularEncargos: (id, estrategia, percentual, dias) =>
     request(
       `/contas-pagar/${id}/simulacao-encargos?${new URLSearchParams({ estrategia, percentual: toNumber(percentual), dias: Number(dias) })}`,
     ),
+  // [FLUXO:PAGAR_VENCIMENTOS] Botão da tela inicia POST que publica eventos de vencimento no backend.
   verificarVencimentos: () =>
     request("/contas-pagar/verificar-vencimentos", { method: "POST" }),
 };

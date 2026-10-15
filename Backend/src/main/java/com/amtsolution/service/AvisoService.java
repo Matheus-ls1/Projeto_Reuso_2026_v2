@@ -48,6 +48,8 @@ public class AvisoService {
     }
 
     public Aviso criar(AvisoRequest r) {
+        // [FLUXO:AVISO_CRIAR] Chamado por AvisoController.criar; valida chave, usa CriadorAvisoManual e persiste no AvisoRepository.
+        // [PADRAO:FACTORY_AVISO] O criador abstrato retorna o Aviso configurado pela subclasse manual antes de preencher e salvar.
         // O criador concreto aplica o Factory Method para definir um aviso manual antes da persistência.
         validarChave(r.chaveEvento(), null);
         Aviso a = manual.criar(new DadosAviso(r.titulo(), r.corpo(), r.prioridade(), r.publico(), r.inicio(), r.fim(),
@@ -61,11 +63,14 @@ public class AvisoService {
     }
 
     public void excluir(Long id) {
+        // [FLUXO:AVISO_EXCLUIR] Chamado pelo controller; busca a entidade e solicita delete/flush ao AvisoRepository.
         repository.delete(buscar(id));
         repository.flush();
     }
 
     public void criarAvisoEstoque(Produto p, java.time.LocalDate data) {
+        // [PADRAO:OBSERVER_ESTOQUE] ObservadorEstoqueBaixo chama este método após o SujeitoProduto publicar EventoProduto.
+        // [PADRAO:FACTORY_AVISO] CriadorAvisoAutomatico produz o aviso automático que será salvo no repositório.
         String chave = "ESTOQUE:" + p.getId();
         // A chave de evento torna a reação do Observer idempotente para o mesmo produto.
         if (repository.existsByChaveEvento(chave))
@@ -79,6 +84,8 @@ public class AvisoService {
     }
 
     public void criarAvisoVencimento(ContaPagar c, java.time.LocalDate data) {
+        // [PADRAO:OBSERVER_VENCIMENTO] ObservadorVencimentoProximo chama este método para cada evento publicado.
+        // [PADRAO:FACTORY_AVISO] A fábrica automática configura o aviso antes da persistência; chave evita duplicidade.
         String chave = "VENCIMENTO:" + c.getId() + ":" + c.getVencimento();
         // A data de vencimento integra a chave para permitir novo aviso se a conta for reagendada.
         if (repository.existsByChaveEvento(chave))

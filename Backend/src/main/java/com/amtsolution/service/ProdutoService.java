@@ -41,6 +41,8 @@ public class ProdutoService {
     }
 
     public Produto criar(ProdutoRequest r) {
+        // [FLUXO:PRODUTO_ESTOQUE] Controller chama este método; valida código, salva em ProdutoRepository e publica EventoProduto.
+        // [PADRAO:OBSERVER_ESTOQUE] O sujeito notifica ObservadorEstoqueBaixo sem o service conhecer a regra de criação de aviso.
         if (repository.existsByCodigo(r.codigo()))
             throw new ConflictException("Código já cadastrado.");
         Produto p = repository.save(preencher(new Produto(), r));
@@ -50,6 +52,7 @@ public class ProdutoService {
     }
 
     public Produto atualizar(Long id, ProdutoRequest r) {
+        // [FLUXO:PRODUTO_ESTOQUE] Atualização valida unicidade, persiste e republica o evento para reavaliar o estoque.
         if (repository.existsByCodigoAndIdNot(r.codigo(), id))
             throw new ConflictException("Código já cadastrado.");
         Produto p = repository.save(preencher(buscar(id), r));
@@ -58,12 +61,14 @@ public class ProdutoService {
     }
 
     public Produto alterarAtivo(Long id, Boolean ativo) {
+        // [FLUXO:PRODUTO_DESATIVAR] Diferente de excluir: mantém o registro e muda somente o campo ativo.
         Produto p = buscar(id);
         p.setAtivo(ativo);
         return repository.save(p);
     }
 
     public void excluir(Long id) {
+        // [FLUXO:PRODUTO_EXCLUIR] Exclusão física só ocorre se AvisoRepository não encontrar histórico referenciando o produto.
         Produto p = buscar(id);
         // Impede exclusão física quando um aviso histórico ainda referencia o produto.
         if (avisos.existsByProdutoOrigem_Id(id))

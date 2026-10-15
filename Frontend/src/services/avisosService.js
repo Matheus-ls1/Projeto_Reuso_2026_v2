@@ -32,11 +32,13 @@ const payload = (a) => ({
   criadoPorUsuarioId: a.criadoPorUsuarioId || null,
 });
 export const avisosService = {
+  // [FLUXO:AVISO_CRIAR] Avisos.jsx chama criar; payload adapta o formulário ao AvisoRequest e request envia POST ao AvisoController.
   listar: async () => (await request("/avisos")).map(map),
   criar: async (a) =>
     map(await request("/avisos", { method: "POST", body: payload(a) })),
   atualizar: async (id, a) =>
     map(await request(`/avisos/${id}`, { method: "PUT", body: payload(a) })),
+  // [FLUXO:AVISO_EXCLUIR] ConfirmDialog em Avisos.jsx chama DELETE; a resposta 204 retorna null ao componente.
   excluir: (id) => request(`/avisos/${id}`, { method: "DELETE" }),
 };
 

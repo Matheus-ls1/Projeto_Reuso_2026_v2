@@ -21,6 +21,8 @@ public class VerificadorVencimentosService {
 
     @Transactional
     public int verificar() {
+        // [FLUXO:PAGAR_VENCIMENTOS] Controller inicia esta busca no repository por contas pendentes/vencidas no período.
+        // [PADRAO:OBSERVER_VENCIMENTO] Cada conta encontrada vira EventoVencimento publicado ao SujeitoVencimento.
         LocalDate hoje = LocalDate.now(), limite = hoje.plusDays(3);
         List<ContaPagar> itens = contas.findBySituacaoInAndVencimentoBetween(List.of("PENDENTE", "VENCIDO"), hoje,
                 limite);

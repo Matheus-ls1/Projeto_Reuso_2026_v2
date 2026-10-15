@@ -30,6 +30,7 @@ public class FornecedorService {
     }
 
     public Fornecedor criar(FornecedorRequest r) {
+        // [FLUXO:FORNECEDOR_CRIAR] Controller validado chama este método; documento único é validado antes do save.
         if (repository.existsByDocumento(r.documento()))
             throw new ConflictException("Documento já cadastrado.");
         return repository.save(preencher(new Fornecedor(), r));
@@ -42,6 +43,7 @@ public class FornecedorService {
     }
 
     public Fornecedor alterarAtivo(Long id, Boolean ativo) {
+        // [FLUXO:FORNECEDOR_DESATIVAR] Mantém dados no repository, ao contrário de excluir().
         // Alterar o status é uma operação separada da exclusão física exposta pelo CRUD.
         Fornecedor f = buscar(id);
         f.setAtivo(ativo);
@@ -49,6 +51,7 @@ public class FornecedorService {
     }
 
     public void excluir(Long id) {
+        // [FLUXO:FORNECEDOR_EXCLUIR] Executa a exclusão física solicitada pela rota DELETE.
         repository.delete(buscar(id));
         repository.flush();
     }

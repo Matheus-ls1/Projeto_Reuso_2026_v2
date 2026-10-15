@@ -2,8 +2,10 @@
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api";
 
 export async function request(path, options = {}) {
+  // [INFRA:HTTP] Ponto comum chamado pelos services JavaScript; envia path e opções ao fetch da API Spring.
   try {
     // Centraliza JSON, erros HTTP e a comunicação usada pelos seis serviços de CRUD.
+    // [INFRA:HTTP] O fetch serializa o corpo JSON e devolve a resposta para o service que iniciou o fluxo.
     const response = await fetch(`${API_URL}${path}`, {
       headers: {
         "Content-Type": "application/json",

@@ -13,6 +13,7 @@ public class SujeitoVencimento {
     }
 
     public void publicar(EventoVencimento evento) {
+        // [PADRAO:OBSERVER_VENCIMENTO] VerificadorVencimentosService publica e este sujeito notifica os observadores.
         observadores.forEach(o -> o.atualizar(evento));
     }
 }

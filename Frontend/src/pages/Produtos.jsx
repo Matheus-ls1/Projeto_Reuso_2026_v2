@@ -57,6 +57,7 @@ export default function Produtos() {
     validade: "",
   });
   const [itens, setItens] = useState([]);
+  // [FLUXO:PRODUTO_ESTOQUE] useEffect e operações do CRUD obtêm a lista que atualiza o estado itens.
   const carregar = async () => {
     try {
       // Recarrega a lista após cada operação para refletir a fonte de dados do backend.
@@ -315,6 +316,7 @@ export default function Produtos() {
   };
 
   // Função de salvar produto ou insumo, dependendo da aba ativa.
+  // [FLUXO:PRODUTO_ESTOQUE] Botão Salvar chama produtosService; o backend persiste e pode publicar evento de estoque.
   const salvar = async () => {
     const atual = tab === "produtos" ? produtoForm : insumoForm;
     if (!(atual.sku || atual.codigo) || !atual.nome || !atual.categoria)

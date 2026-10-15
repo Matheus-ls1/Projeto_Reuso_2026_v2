@@ -36,6 +36,7 @@ public class ContaPagarController {
     }
 
     @PostMapping
+    // [FLUXO:PAGAR_CRIAR] POST do contasPagarService valida ContaPagarRequest e delega a criação ao service.
     public ResponseEntity<ContaPagar> criar(@Valid @RequestBody ContaPagarRequest r) {
         ContaPagar c = service.criar(r);
         return ResponseEntity.created(URI.create("/api/contas-pagar/" + c.getId())).body(c);
@@ -52,6 +53,7 @@ public class ContaPagarController {
     }
 
     @GetMapping("/{id}/simulacao-encargos")
+    // [FLUXO:PAGAR_ENCARGOS] GET chamado pela tela; retorna ResultadoCalculo obtido pela Strategy, sem gravar a conta.
     // Retorna uma simulação Strategy sem alterar o lançamento salvo no banco.
     public ResultadoCalculo simular(@PathVariable Long id, @RequestParam String estrategia,
             @RequestParam(required = false) BigDecimal percentual, @RequestParam(defaultValue = "0") int dias) {
@@ -59,6 +61,7 @@ public class ContaPagarController {
     }
 
     @PostMapping("/verificar-vencimentos")
+    // [FLUXO:PAGAR_VENCIMENTOS] POST chamado pelo botão da tela; delega ao publicador VerificadorVencimentosService.
     // Publica eventos para contas próximas do vencimento, permitindo a reação dos observadores.
     public java.util.Map<String, Integer> verificarVencimentos() {
         return java.util.Map.of("contasVerificadas", vencimentos.verificar());

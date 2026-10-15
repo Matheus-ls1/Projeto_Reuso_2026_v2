@@ -31,6 +31,7 @@ public class FornecedorController {
     }
 
     @PostMapping
+    // [FLUXO:FORNECEDOR_CRIAR] POST valida FornecedorRequest e encaminha o novo cadastro ao FornecedorService.
     public ResponseEntity<Fornecedor> criar(@Valid @RequestBody FornecedorRequest r) {
         Fornecedor f = service.criar(r);
         return ResponseEntity.created(URI.create("/api/fornecedores/" + f.getId())).body(f);
@@ -42,12 +43,14 @@ public class FornecedorController {
     }
 
     @PatchMapping("/{id}/ativo")
+    // [FLUXO:FORNECEDOR_DESATIVAR] PATCH altera o status; é diferente do DELETE permanente abaixo.
     // Esta rota modifica somente a disponibilidade do cadastro; não executa exclusão física.
     public Fornecedor alterarAtivo(@PathVariable Long id, @Valid @RequestBody AtivoRequest r) {
         return service.alterarAtivo(id, r.ativo());
     }
 
     @DeleteMapping("/{id}")
+    // [FLUXO:FORNECEDOR_EXCLUIR] DELETE solicita remoção física ao service.
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         service.excluir(id);
         return ResponseEntity.noContent().build();

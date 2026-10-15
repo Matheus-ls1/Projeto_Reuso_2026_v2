@@ -33,6 +33,7 @@ export default function Fornecedores() {
     [statusModal, setStatusModal] = useState(false),
     [excluirModal, setExcluirModal] = useState(false),
     [excluindo, setExcluindo] = useState(false);
+  // [FLUXO:FORNECEDOR_CRIAR] useEffect e pós-operação atualizam o estado dados com a listagem da API.
   const carregar = async () => {
     try {
       setDados(await fornecedoresService.listar());
@@ -43,6 +44,7 @@ export default function Fornecedores() {
   useEffect(() => {
     carregar();
   }, []);
+  // [FLUXO:FORNECEDOR_CRIAR] Botão Salvar valida e chama criar/atualizar no fornecedoresService.
   const salvar = async () => {
     if (
       !form.nome ||
@@ -65,6 +67,7 @@ export default function Fornecedores() {
       setSalvando(false);
     }
   };
+  // [FLUXO:FORNECEDOR_DESATIVAR] Confirmação usa PATCH; o cadastro continua persistido, ao contrário da exclusão.
   const alterarStatus = async () => {
     try {
       // O PATCH altera somente ativo/inativo e mantém o registro no banco.

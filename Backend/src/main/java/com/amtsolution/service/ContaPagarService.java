@@ -45,12 +45,16 @@ public class ContaPagarService {
     }
 
     public ContaPagar criar(ContaPagarRequest r) {
+        // [FLUXO:PAGAR_CRIAR] Controller validado chama este método; fábrica cria a entidade e ContaPagarRepository a persiste.
+        // [PADRAO:FACTORY_FINANCEIRO] CriadorLancamentoFinanceiro delega fabricar() a CriadorContaPagar e devolve LancamentoFinanceiro.
         // A fábrica fornece a entidade concreta e evita que o serviço conheça a criação do lançamento.
         ContaPagar c = (ContaPagar) criador.criar().entidade();
         return repository.save(preencher(c, r));
     }
 
     public ResultadoCalculo simularEncargos(Long id, String estrategia, java.math.BigDecimal percentual, int dias) {
+        // [PADRAO:STRATEGY_ENCARGOS] Controller chama a simulação; ContextoEncargo seleciona e executa a implementação pelo nome.
+        // [FLUXO:PAGAR_ENCARGOS] Busca a conta no repository e devolve ResultadoCalculo ao frontend, sem save.
         ContaPagar c = buscar(id);
         // O contexto seleciona a Strategy pelo nome sem alterar o valor armazenado na conta.
         return encargos.simular(estrategia, c.getValorOriginal(), percentual, dias);
@@ -61,6 +65,7 @@ public class ContaPagarService {
     }
 
     public ContaPagar atualizarSituacao(Long id, String situacao) {
+        // [FLUXO:PAGAR_CRIAR] PATCH valida a situação permitida e persiste somente a alteração de estado.
         if (!Set.of("PENDENTE", "PAGO", "VENCIDO", "CANCELADO").contains(situacao))
             throw new IllegalArgumentException();
         ContaPagar c = buscar(id);
@@ -69,6 +74,7 @@ public class ContaPagarService {
     }
 
     public void excluir(Long id) {
+        // [FLUXO:PAGAR_EXCLUIR] Antes do delete, consulta AvisoRepository para preservar referências de avisos automáticos.
         ContaPagar c = buscar(id);
         // Mantém a integridade de avisos que registram a origem financeira do evento.
         if (avisos.existsByContaPagarOrigem_Id(id))

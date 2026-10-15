@@ -14,6 +14,7 @@ public class ObservadorVencimentoProximo implements ObservadorVencimento {
     }
 
     public void atualizar(EventoVencimento e) {
+        // [PADRAO:OBSERVER_VENCIMENTO] Delega o aviso automático ao AvisoService, que previne duplicidade pela chave.
         avisos.criarAvisoVencimento(e.conta(), LocalDate.now());
     }
 }

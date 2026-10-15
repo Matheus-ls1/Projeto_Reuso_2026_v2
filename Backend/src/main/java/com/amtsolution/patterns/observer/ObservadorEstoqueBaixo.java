@@ -14,6 +14,7 @@ public class ObservadorEstoqueBaixo implements ObservadorProduto {
     }
 
     public void atualizar(EventoProduto e) {
+        // [PADRAO:OBSERVER_ESTOQUE] Reação concreta: quando ativo e abaixo do mínimo, delega a criação ao AvisoService.
         var p = e.produto();
         // O serviço de avisos valida a chave do evento antes de persistir, evitando duplicidade.
         if (Boolean.TRUE.equals(p.getAtivo()) && p.getQuantidadeEstoque().compareTo(p.getQuantidadeMinima()) <= 0)

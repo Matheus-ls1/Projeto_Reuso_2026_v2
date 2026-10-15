@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 // DTO validado para os dados que podem ser enviados ao CRUD de avisos.
+// [INFRA:VALIDACAO] AvisoController aplica @Valid neste DTO antes de chamar AvisoService.
 public record AvisoRequest(
         @NotBlank @Size(max = 200) String titulo, 
         @NotBlank String corpo,

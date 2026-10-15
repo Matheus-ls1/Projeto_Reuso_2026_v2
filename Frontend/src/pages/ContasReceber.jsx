@@ -45,6 +45,7 @@ export default function ContasReceber() {
     parametro: "",
     resultado: null,
   });
+  // [FLUXO:RECEBER_CRIAR] useEffect e pós-operação substituem o estado contas pela resposta da API.
   const carregar = async () => {
     try {
       // Centraliza a atualização da tabela após cadastro, edição ou recebimento.
@@ -243,6 +244,7 @@ export default function ContasReceber() {
               variant="primary"
               disabled={salvando}
               onClick={async () => {
+                // [FLUXO:RECEBER_CRIAR] Botão Salvar valida e chama criar/atualizar; a lista é recarregada após o retorno.
                 if (
                   !form.descricao ||
                   !form.cliente ||
@@ -341,6 +343,7 @@ export default function ContasReceber() {
             <Button
               variant="primary"
               onClick={async () => {
+                // [FLUXO:RECEBER_CRIAR] Confirmação altera somente a situação para RECEBIDO e atualiza o estado.
                 try {
                   await contasReceberService.situacao(
                     contaSelecionada.id,
@@ -416,6 +419,7 @@ export default function ContasReceber() {
               variant="primary"
               disabled={simulando}
               onClick={async () => {
+                // [FLUXO:RECEBER_DESCONTOS] A estratégia selecionada é enviada ao service e ResultadoCalculo alimenta a interface.
                 try {
                   setSimulando(true);
                   const resultado = await contasReceberService.simularDescontos(

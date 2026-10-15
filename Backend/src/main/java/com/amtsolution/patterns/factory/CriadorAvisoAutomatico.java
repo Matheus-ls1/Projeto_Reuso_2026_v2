@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 // Criador concreto dos avisos produzidos automaticamente pelos observadores.
 public class CriadorAvisoAutomatico extends CriadorAviso {
+    // [PADRAO:FACTORY_AVISO] Implementação concreta usada por AvisoService nas reações dos Observers.
     protected Aviso fabricar() {
         Aviso a = new Aviso();
         a.setTipo("ESTOQUE_BAIXO");

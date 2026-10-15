@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 // DTO de entrada da conta a pagar, incluindo os parâmetros da estratégia de encargo.
+// [INFRA:VALIDACAO] ContaPagarController usa @Valid antes de encaminhar a criação/edição ao service.
 public record ContaPagarRequest(
     @NotBlank @Size(max = 200) String descricao, @NotBlank @Size(max = 80) String categoria,
     Long fornecedorId, @NotNull LocalDate vencimento, @NotNull @DecimalMin("0.01") BigDecimal valorOriginal,

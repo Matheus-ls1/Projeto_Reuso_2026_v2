@@ -20,11 +20,13 @@ const payload = (u) => ({
   ativo: u.status === "Ativo",
 });
 export const usuariosService = {
+  // [FLUXO:USUARIO_CRIAR] Usuarios.jsx chama criar/atualizar e este service adapta o formulário ao UsuarioRequest.
   listar: async () => (await request("/usuarios")).map(map),
   criar: async (u) =>
     map(await request("/usuarios", { method: "POST", body: payload(u) })),
   atualizar: async (id, u) =>
     map(await request(`/usuarios/${id}`, { method: "PUT", body: payload(u) })),
+  // [FLUXO:USUARIO_DESATIVAR] PATCH conserva o usuário e altera apenas o campo ativo.
   alterarStatus: async (id, ativo) =>
     map(
       await request(`/usuarios/${id}/ativo`, {
@@ -32,5 +34,6 @@ export const usuariosService = {
         body: { ativo },
       }),
     ),
+  // [FLUXO:USUARIO_EXCLUIR] DELETE solicita a remoção permanente ao UsuarioController.
   excluir: (id) => request(`/usuarios/${id}`, { method: "DELETE" }),
 };

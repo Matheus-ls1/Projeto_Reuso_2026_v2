@@ -15,10 +15,12 @@ public class ContextoEncargo {
     }
 
     public ResultadoCalculo simular(String nome, BigDecimal valor, BigDecimal percentual, int dias) {
+        // [PADRAO:STRATEGY_ENCARGOS] ContaPagarService envia o nome; o mapa seleciona JurosDiarios, Multa ou SemEncargo.
         CalculoEncargoStrategy e = estrategias.get(nome);
         if (e == null)
             throw new IllegalArgumentException("Estratégia de encargo inválida.");
         // A interface comum permite executar a estratégia concreta sem conhecer sua fórmula.
+        // [PADRAO:STRATEGY_ENCARGOS] A interface executa calcular() polimorficamente e devolve ResultadoCalculo ao service.
         BigDecimal ajuste = e.calcular(valor, percentual == null ? BigDecimal.ZERO : percentual, dias);
         return new ResultadoCalculo(nome, valor, valor.add(ajuste), ajuste);
     }

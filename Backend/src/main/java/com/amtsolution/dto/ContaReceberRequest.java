@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 // DTO de entrada da conta a receber, incluindo os parâmetros da estratégia de desconto.
+// [INFRA:VALIDACAO] ContaReceberController valida o payload recebido antes da persistência.
 public record ContaReceberRequest(
         @NotBlank @Size(max = 200) String descricao,
         @NotBlank @Size(max = 80) String categoria,

@@ -32,6 +32,7 @@ public class UsuarioController {
     }
 
     @PostMapping
+    // [FLUXO:USUARIO_CRIAR] POST valida UsuarioRequest e delega ao service, que protege a senha antes de persistir.
     public ResponseEntity<Usuario> criar(@Valid @RequestBody UsuarioRequest r) {
         Usuario u = service.criar(r);
         return ResponseEntity.created(URI.create("/api/usuarios/" + u.getId())).body(u);
@@ -43,12 +44,14 @@ public class UsuarioController {
     }
 
     @PatchMapping("/{id}/ativo")
+    // [FLUXO:USUARIO_DESATIVAR] PATCH apenas troca ativo; não remove o cadastro como DELETE.
     // Mantém o usuário cadastrado e altera apenas seu status de utilização.
     public Usuario alterarAtivo(@PathVariable Long id, @Valid @RequestBody AtivoRequest r) {
         return service.alterarAtivo(id, r.ativo());
     }
 
     @DeleteMapping("/{id}")
+    // [FLUXO:USUARIO_EXCLUIR] DELETE delega a exclusão física a UsuarioService.
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         service.excluir(id);
         return ResponseEntity.noContent().build();

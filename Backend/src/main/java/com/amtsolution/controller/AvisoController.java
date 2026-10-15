@@ -30,6 +30,7 @@ public class AvisoController {
     }
 
     @PostMapping
+    // [FLUXO:AVISO_CRIAR] POST recebido do avisosService; @Valid valida AvisoRequest antes de AvisoService.criar.
     public ResponseEntity<Aviso> criar(@Valid @RequestBody AvisoRequest r) {
         Aviso a = service.criar(r);
         return ResponseEntity.created(URI.create("/api/avisos/" + a.getId())).body(a);
@@ -41,6 +42,7 @@ public class AvisoController {
     }
 
     @DeleteMapping("/{id}")
+    // [FLUXO:AVISO_EXCLUIR] DELETE recebido do ConfirmDialog; delega a exclusão física ao service e responde 204.
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         service.excluir(id);
         return ResponseEntity.noContent().build();

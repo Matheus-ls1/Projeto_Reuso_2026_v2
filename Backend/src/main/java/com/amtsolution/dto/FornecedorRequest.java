@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 // DTO validado usado para criar ou atualizar fornecedores.
+// [INFRA:VALIDACAO] FornecedorController valida este DTO; unicidade do documento fica em FornecedorService.
 public record FornecedorRequest(
         @NotBlank @Size(max = 150) String nome, 
         @NotBlank @Size(max = 18) String documento,

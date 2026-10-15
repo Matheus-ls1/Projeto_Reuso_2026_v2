@@ -33,6 +33,7 @@ const payload = (c) => ({
 });
 export const contasReceberService = {
   ...criarOperacoesFinanceirasComuns("/contas-receber", map, payload),
+  // [FLUXO:RECEBER_DESCONTOS] A tela solicita a simulação; a resposta ResultadoCalculo volta sem persistir a conta.
   simularDescontos: (id, estrategia, parametro, dias) =>
     request(
       `/contas-receber/${id}/simulacao-descontos?${new URLSearchParams({ estrategia, parametro: toNumber(parametro), dias: Number(dias) })}`,

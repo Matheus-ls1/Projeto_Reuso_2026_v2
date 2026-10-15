@@ -76,6 +76,7 @@ export default function Usuarios() {
     senha: "",
   });
   const [usuarios, setUsuarios] = useState([]);
+  // [FLUXO:USUARIO_CRIAR] useEffect e pós-operação carregam a resposta da API no estado usuarios.
   const carregar = async () => {
     try {
       // Atualiza a tabela com a representação recebida do serviço de usuários.
@@ -176,6 +177,7 @@ export default function Usuarios() {
       ),
     },
   ];
+  // [FLUXO:USUARIO_CRIAR] Botão Salvar valida o formulário e chama criar/atualizar no usuariosService.
   const salvar = async () => {
     if (!form.nome || !form.email || !form.cargo)
       return toast("Preencha os campos obrigatórios.", "error");
@@ -330,6 +332,7 @@ export default function Usuarios() {
         open={desativarModal}
         onClose={() => setDesativarModal(false)}
         onConfirm={async () => {
+          // [FLUXO:USUARIO_DESATIVAR] PATCH muda ativo/inativo e depois recarrega a tabela.
           try {
             const ativo = usuarioPara.status !== "Ativo";
             await usuariosService.alterarStatus(usuarioPara.id, ativo);
@@ -352,6 +355,7 @@ export default function Usuarios() {
         onClose={() => setExcluirModal(false)}
         loading={excluindo}
         onConfirm={async () => {
+          // [FLUXO:USUARIO_EXCLUIR] DELETE remove permanentemente e a listagem é atualizada.
           try {
             setExcluindo(true);
             await usuariosService.excluir(usuarioPara.id);

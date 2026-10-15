@@ -31,12 +31,14 @@ public class ProdutoController {
     }
 
     @PostMapping
+    // [FLUXO:PRODUTO_ESTOQUE] POST valida ProdutoRequest e chama ProdutoService, que pode publicar o evento de estoque.
     public ResponseEntity<Produto> criar(@Valid @RequestBody ProdutoRequest r) {
         Produto p = service.criar(r);
         return ResponseEntity.created(URI.create("/api/produtos/" + p.getId())).body(p);
     }
 
     @PutMapping("/{id}")
+    // [FLUXO:PRODUTO_ESTOQUE] Atualização segue o mesmo service e pode disparar nova verificação pelos observadores.
     public Produto atualizar(@PathVariable Long id, @Valid @RequestBody ProdutoRequest r) {
         return service.atualizar(id, r);
     }

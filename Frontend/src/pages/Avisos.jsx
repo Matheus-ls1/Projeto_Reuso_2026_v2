@@ -37,6 +37,7 @@ export default function Avisos() {
   const [avisos, setAvisos] = useState([]);
   const [salvando, setSalvando] = useState(false);
   const [excluindo, setExcluindo] = useState(false);
+  // [FLUXO:AVISO_CRIAR] useEffect e os pós-salvamentos chamam listar; a resposta atualiza o estado avisos.
   const carregar = async () => {
     try {
       setAvisos(await avisosService.listar());
@@ -52,6 +53,7 @@ export default function Avisos() {
     a.titulo.toLowerCase().includes(busca.toLowerCase()),
   );
 
+  // [FLUXO:AVISO_CRIAR] Botão Salvar valida o formulário e chama criar ou atualizar no avisosService.
   const salvar = async () => {
     if (!form.titulo || !form.corpo || !form.inicio)
       return toast("Preencha título, conteúdo e data de início.", "error");
@@ -297,6 +299,7 @@ export default function Avisos() {
         onClose={() => setExcluirModal(false)}
         loading={excluindo}
         onConfirm={async () => {
+          // [FLUXO:AVISO_EXCLUIR] Confirmação chama avisosService.excluir, recarrega o estado e fecha o modal.
           try {
             setExcluindo(true);
             await avisosService.excluir(avisoPara.id);

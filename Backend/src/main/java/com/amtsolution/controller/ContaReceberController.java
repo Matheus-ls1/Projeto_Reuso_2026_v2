@@ -33,6 +33,7 @@ public class ContaReceberController {
     }
 
     @PostMapping
+    // [FLUXO:RECEBER_CRIAR] POST do contasReceberService valida ContaReceberRequest e chama o service.
     public ResponseEntity<ContaReceber> criar(@Valid @RequestBody ContaReceberRequest r) {
         ContaReceber c = service.criar(r);
         return ResponseEntity.created(URI.create("/api/contas-receber/" + c.getId())).body(c);
@@ -49,6 +50,7 @@ public class ContaReceberController {
     }
 
     @GetMapping("/{id}/simulacao-descontos")
+    // [FLUXO:RECEBER_DESCONTOS] GET da tela devolve a simulação Strategy sem alterar a entidade persistida.
     // A estratégia escolhida define o algoritmo de desconto usado na resposta.
     public ResultadoCalculo simular(@PathVariable Long id, @RequestParam String estrategia,
             @RequestParam(required = false) BigDecimal parametro, @RequestParam(defaultValue = "0") int dias) {

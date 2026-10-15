@@ -33,6 +33,7 @@ public class UsuarioService {
     }
 
     public Usuario criar(UsuarioRequest r) {
+        // [FLUXO:USUARIO_CRIAR] Valida e-mail e persiste o usuário; preencher aplica BCrypt à senha informada.
         if (repository.existsByEmail(r.email()))
             throw new ConflictException("E-mail já cadastrado.");
         return repository.save(preencher(new Usuario(), r));
@@ -45,12 +46,14 @@ public class UsuarioService {
     }
 
     public Usuario alterarAtivo(Long id, Boolean ativo) {
+        // [FLUXO:USUARIO_DESATIVAR] Atualiza apenas ativo e conserva o cadastro no banco.
         Usuario u = buscar(id);
         u.setAtivo(ativo);
         return repository.save(u);
     }
 
     public void excluir(Long id) {
+        // [FLUXO:USUARIO_EXCLUIR] DELETE chama esta remoção física no UsuarioRepository.
         repository.delete(buscar(id));
         repository.flush();
     }

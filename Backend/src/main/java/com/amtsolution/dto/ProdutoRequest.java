@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 // DTO que recebe os campos comuns a produtos e insumos antes do mapeamento para a entidade.
+// [INFRA:VALIDACAO] ProdutoController valida tipo, campos obrigatórios e limites antes de ProdutoService.
 public record ProdutoRequest(
         @NotBlank @Pattern(regexp = "PRODUTO|INSUMO") String tipo,
         @NotBlank @Size(max = 50) String codigo,
