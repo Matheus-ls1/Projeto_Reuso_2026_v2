@@ -39,3 +39,4 @@ export const avisosService = {
     map(await request(`/avisos/${id}`, { method: "PUT", body: payload(a) })),
   excluir: (id) => request(`/avisos/${id}`, { method: "DELETE" }),
 };
+

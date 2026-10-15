@@ -55,9 +55,7 @@ export default function Fornecedores() {
     try {
       // A mesma ação atende inclusão e edição conforme exista um item selecionado.
       setSalvando(true);
-      editItem
-        ? await fornecedoresService.atualizar(editItem.id, form)
-        : await fornecedoresService.criar(form);
+      editItem ? await fornecedoresService.atualizar(editItem.id, form) : await fornecedoresService.criar(form);
       await carregar();
       setDrawer(false);
       toast("Fornecedor salvo com sucesso.", "success");

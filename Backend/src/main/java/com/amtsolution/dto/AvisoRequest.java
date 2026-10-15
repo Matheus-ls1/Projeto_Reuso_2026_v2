@@ -7,7 +7,9 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 // DTO validado para os dados que podem ser enviados ao CRUD de avisos.
-public record AvisoRequest(@NotBlank @Size(max = 200) String titulo, @NotBlank String corpo,
+public record AvisoRequest(
+        @NotBlank @Size(max = 200) String titulo, 
+        @NotBlank String corpo,
         @NotBlank @Pattern(regexp = "MANUAL|ESTOQUE_BAIXO|VENCIMENTO_PROXIMO") String tipo,
         @NotBlank @Pattern(regexp = "ALTA|MEDIA|BAIXA") String prioridade,
         @NotBlank @Size(max = 50) String publico,

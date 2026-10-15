@@ -16,8 +16,7 @@ const payload = (f) => ({
 export const fornecedoresService = {
   // Reúne as operações HTTP para que a tela não conheça detalhes das rotas REST.
   listar: async () => (await request("/fornecedores")).map(map),
-  criar: async (f) =>
-    map(await request("/fornecedores", { method: "POST", body: payload(f) })),
+  criar: async (f) => map(await request("/fornecedores", { method: "POST", body: payload(f) })),
   atualizar: async (id, f) =>
     map(
       await request(`/fornecedores/${id}`, { method: "PUT", body: payload(f) }),

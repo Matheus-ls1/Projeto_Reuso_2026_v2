@@ -5,6 +5,7 @@ import {
   toNumber,
   statusLabel,
 } from "./api";
+import { criarOperacoesFinanceirasComuns } from "./operacoesFinanceirasComuns";
 // Converte a conta recebida da API para o formato apresentado pela tela.
 const map = (c) => ({
   ...c,
@@ -31,26 +32,9 @@ const payload = (c) => ({
   observacao: c.observacao || null,
 });
 export const contasReceberService = {
-  listar: async () => (await request("/contas-receber")).map(map),
-  criar: async (c) =>
-    map(await request("/contas-receber", { method: "POST", body: payload(c) })),
-  atualizar: async (id, c) =>
-    map(
-      await request(`/contas-receber/${id}`, {
-        method: "PUT",
-        body: payload(c),
-      }),
-    ),
-  situacao: async (id, situacao) =>
-    map(
-      await request(`/contas-receber/${id}/situacao`, {
-        method: "PATCH",
-        body: { situacao },
-      }),
-    ),
+  ...criarOperacoesFinanceirasComuns("/contas-receber", map, payload),
   simularDescontos: (id, estrategia, parametro, dias) =>
     request(
       `/contas-receber/${id}/simulacao-descontos?${new URLSearchParams({ estrategia, parametro: toNumber(parametro), dias: Number(dias) })}`,
     ),
-  excluir: (id) => request(`/contas-receber/${id}`, { method: "DELETE" }),
 };

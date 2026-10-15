@@ -313,6 +313,8 @@ export default function Produtos() {
     }
     setDrawer(true);
   };
+
+  // Função de salvar produto ou insumo, dependendo da aba ativa.
   const salvar = async () => {
     const atual = tab === "produtos" ? produtoForm : insumoForm;
     if (!(atual.sku || atual.codigo) || !atual.nome || !atual.categoria)

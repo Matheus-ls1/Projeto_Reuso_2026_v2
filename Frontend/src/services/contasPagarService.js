@@ -5,6 +5,7 @@ import {
   toNumber,
   statusLabel,
 } from "./api";
+import { criarOperacoesFinanceirasComuns } from "./operacoesFinanceirasComuns";
 // Converte a conta persistida para os nomes usados no formulário financeiro.
 const map = (c) => ({
   ...c,
@@ -34,25 +35,11 @@ const payload = (c) => ({
   observacao: c.observacao || null,
 });
 export const contasPagarService = {
-  listar: async () => (await request("/contas-pagar")).map(map),
-  criar: async (c) =>
-    map(await request("/contas-pagar", { method: "POST", body: payload(c) })),
-  atualizar: async (id, c) =>
-    map(
-      await request(`/contas-pagar/${id}`, { method: "PUT", body: payload(c) }),
-    ),
-  situacao: async (id, situacao) =>
-    map(
-      await request(`/contas-pagar/${id}/situacao`, {
-        method: "PATCH",
-        body: { situacao },
-      }),
-    ),
+  ...criarOperacoesFinanceirasComuns("/contas-pagar", map, payload),
   simularEncargos: (id, estrategia, percentual, dias) =>
     request(
       `/contas-pagar/${id}/simulacao-encargos?${new URLSearchParams({ estrategia, percentual: toNumber(percentual), dias: Number(dias) })}`,
     ),
   verificarVencimentos: () =>
     request("/contas-pagar/verificar-vencimentos", { method: "POST" }),
-  excluir: (id) => request(`/contas-pagar/${id}`, { method: "DELETE" }),
 };

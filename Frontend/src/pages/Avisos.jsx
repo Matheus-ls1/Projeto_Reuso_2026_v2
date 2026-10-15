@@ -12,11 +12,13 @@ import ConfirmDialog from "../components/ui/ConfirmDialog";
 import Badge from "../components/ui/Badge";
 import { toast } from "../components/ui/Toast";
 import { avisosService } from "../services/avisosService";
+
 const prioridadeColor = (p) => {
   if (p === "Alta") return "red";
   if (p === "Média") return "orange";
   return "gray";
 };
+
 // Mantém o CRUD de avisos manuais; avisos automáticos também aparecem na mesma listagem.
 export default function Avisos() {
   const [busca, setBusca] = useState("");
@@ -45,9 +47,11 @@ export default function Avisos() {
   useEffect(() => {
     carregar();
   }, []);
+  
   const dados = avisos.filter((a) =>
     a.titulo.toLowerCase().includes(busca.toLowerCase()),
   );
+
   const salvar = async () => {
     if (!form.titulo || !form.corpo || !form.inicio)
       return toast("Preencha título, conteúdo e data de início.", "error");
