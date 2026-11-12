@@ -1,0 +1,5 @@
+com\amtsolutions\databasefirst\DemonstracaoDatabaseFirst.class
+com\amtsolutions\databasefirst\mapper\CaixaGeradoMapper.class
+com\amtsolutions\databasefirst\model\MovimentacaoCaixaGerada.class
+com\amtsolutions\databasefirst\mapper\MovimentacaoCaixaGeradaMapper.class
+com\amtsolutions\databasefirst\model\CaixaGerado.class

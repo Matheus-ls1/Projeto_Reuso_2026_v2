@@ -16,9 +16,11 @@ export async function request(path, options = {}) {
     });
     if (!response.ok) {
       const body = await response.json().catch(() => ({}));
-      throw new Error(
+      const error = new Error(
         body.erro || body.message || "Não foi possível concluir a operação.",
       );
+      error.status = response.status;
+      throw error;
     }
     return response.status === 204 ? null : response.json();
   } catch (error) {

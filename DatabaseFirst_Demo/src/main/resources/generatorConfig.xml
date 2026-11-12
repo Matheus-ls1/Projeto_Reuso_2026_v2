@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "https://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- Exemplo de Reverse Engineering: metadados da tabela -> classes Java e SQL CRUD. -->
+    <context id="AMT_Solutions_DatabaseFirst" targetRuntime="MyBatis3Simple">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <jdbcConnection
+            driverClass="org.mariadb.jdbc.Driver"
+            connectionURL="jdbc:mariadb://127.0.0.1:3306/amt_solution"
+            userId="root"
+            password=""/>
+        <modelGenerator
+            targetPackage="com.amtsolutions.databasefirst.model"
+            targetProject="src/main/java"/>
+        <sqlMapGenerator
+            targetPackage="com.amtsolutions.databasefirst.mapper"
+            targetProject="src/main/resources"/>
+        <clientGenerator
+            type="XMLMAPPER"
+            targetPackage="com.amtsolutions.databasefirst.mapper"
+            targetProject="src/main/java"/>
+        <table tableName="caixas" domainObjectName="CaixaGerado">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+        <table tableName="movimentacoes_caixa" domainObjectName="MovimentacaoCaixaGerada">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

@@ -1,5 +1,7 @@
 import { request } from "./api";
 
+//conceito DRY - Don't repeat yourself ou seja não repita a mesma coisa várias vezes, crie funções que possam ser reaproveitadas.
+
 // Reúne o CRUD que é igual para contas a pagar e a receber.
 export const criarOperacoesFinanceirasComuns = (recurso, map, payload) => ({
   // [INFRA:HTTP] ContasPagar/ContasReceber reutilizam estas operações, que encaminham cada rota ao request().
